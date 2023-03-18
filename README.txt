@@ -1,3 +1,34 @@
+v1.9 - Keeping secrets, secret with dotenv
+==========================================
+It's time we separate our passwords and secret keys from our code.
+A password or secret_key should not be stored in a git repo.
+
+We'll remove the passwords and secrets from the code and into a .env file.
+Then we'll add a rule to our .gitignore file to exclude the .env file from entering our repo.
+
+All secrets should be put in the .env file.
+What is a secret?
+ - Database Usernames and Passwords (as part of connection strings)
+ - Encryption keys
+ - API keys
+
+- Follow along instructions:
+npm install dotenv
+
+Move secrets to the .env file
+ *remove the enclosing quotes on string values
+ *remove spaces before and after the equals symbol (=)
+ *use uppercase for naming convention
+ *no semicolon (;) at the end of a line
+ *use can use a hash symbol (#) to make the rest of the line a comment
+Ex:  DB_USERNAME=ElephantMan   #Comment: This user has read-only access to the DB
+Ex2: DB_PASSWORD=A%r_bT90!KlBebv
+
+- Notes:
+When moving this code to production environments, you'll need to create
+and populate the .env file on those systems (remember production will need
+them, they aren't in the source code and otherwise your code will not run)
+
 v1.8 - Sessions - With Encryption
 ===============================
 Being able to read the session information on the server side is bad, 
