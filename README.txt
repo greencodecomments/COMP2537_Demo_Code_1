@@ -1,3 +1,48 @@
+v1.7 - Sessions - No Encryption
+===============================
+In the previous "Login" version, we were supposed to go to /login,
+enter our user and password and if our user was found _and_ the password was correct
+it would let us go to /loggedin.
+However, there was nothing preventing us from going to directly to /loggedin 
+before logging in. Let's fix this with sessions.
+
+Sessions store a cookie on the client side and a matching id on the server.
+The server can store some data to confirm the user is properly logged in.
+A valid session will only exist if you have logged in with the correct password (as an existing user)
+
+I've chosen to store these sessions (the server side info) in a mongodb database,
+but there are other ways to do this as well, MySQL, MS SQL, Redis, etc 
+(See documentation for details: https://www.npmjs.com/package/express-session#compatible-session-stores)
+
+I've set up a mongodb database for free on Atlas (https://www.mongodb.com/atlas/database)
+Once setup, you can access your mongodb via the connection string Atlas provides you
+ex: mongodb+srv://${mongodb_user}:${mongodb_password}@cluster0.ari8a.mongodb.net/${database_name}
+(${mongodb_user} gets replaced with the user, ${mongodb_password} is replaced with the mongodb password
+ and ${database_name} replaced with the database name)
+
+- Follow along instructions:
+npm install express-session
+npm install connect-mongo
+Generate your own GUID for your node_session_secret
+at: https://guidgenerator.com/
+or: https://www.uuidgenerator.net/guid
+or: https://www.guidgen.com/
+
+- To Test:
+Create a user http://localhost:3000/createUser
+(remember to create some users - your server likely got rebooted and all users got deleted)
+
+Go directly to http://localhost:3000/loggedin, it should now say you aren't logged in
+Attempt to log in http://localhost:3000/login
+If you put in the same password it should go here: http://localhost:3000/loggedin
+If not (wrong password or missing user) it goes back to login page: http://localhost:3000/login
+
+Open your mongo session database and you can see your session with username stored in it (unencrypted)
+- Notes:
+Sessions are not encrypted on server side. This is BAD. :'(
+You should not store your mongodb username and password in your source code and in your git repo.
+ (again, we'll fix this later)
+
 v1.6 - "Login" - using BCrypt to compare a user's password
 ==========================================================
 If the passwords are no longer stored in plaintext, how do we tell if the 
