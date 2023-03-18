@@ -1,3 +1,18 @@
+v1.2 - Catch All and 404s
+=========================
+What happens if we go to a page that doesn't exist?
+
+Previous versions will give an error message (https://localhost:3000/does_not_exist):
+Cannot GET /does_not_exist
+
+Let's fix this!
+
+- To test:
+open browser at: https://localhost:3000/does_not_exist
+Should not say "Page not found - 404"
+(also sends status 404)
+Any route (page) not specified before the catch all will give a 404.
+
 v1.1 - Simple Website playing with routes and URL and query params
 ==================================================================
 I want to create a 2nd page at /about to show my name
