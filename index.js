@@ -52,6 +52,36 @@ app.get('/', (req,res) => {
     res.send("<h1>Hello World!</h1>");
 });
 
+app.get('/nosql-injection', async (req,res) => {
+	var username = req.query.user;
+
+	if (!username) {
+		res.send(`<h3>no user provided - try /nosql-injection?user=name</h3> <h3>or /nosql-injection?user[$ne]=name</h3>`);
+		return;
+	}
+	console.log("user: "+username);
+
+	const schema = Joi.string().max(20).required();
+	const validationResult = schema.validate(username);
+
+	//If we didn't use Joi to validate and check for a valid URL parameter below
+	// we could run our userCollection.find and it would be possible to attack.
+	// A URL parameter of user[$ne]=name would get executed as a MongoDB command
+	// and may result in revealing information about all users or a successful
+	// login without knowing the correct password.
+	if (validationResult.error != null) {  
+	   console.log(validationResult.error);
+	   res.send("<h1 style='color:darkred;'>A NoSQL injection attack was detected!!</h1>");
+	   return;
+	}	
+
+	const result = await userCollection.find({username: username}).project({username: 1, password: 1, _id: 1}).toArray();
+
+	console.log(result);
+
+    res.send(`<h1>Hello ${username}</h1>`);
+});
+
 app.get('/about', (req,res) => {
     var color = req.query.color;
 
