@@ -1,3 +1,24 @@
+v1.6 - "Login" - using BCrypt to compare a user's password
+==========================================================
+If the passwords are no longer stored in plaintext, how do we tell if the 
+password someone is entering when logging in is the same as when they created it?
+
+BCrypt has a function to compare the current password with a previously 
+hashed password - bcrypt.compareSync()
+
+Let's use it see if we can "login" as user.
+
+- To Test
+Create a user http://localhost:3000/createUser
+(remember to create some users - your server likely got rebooted and all users got deleted)
+Attempt to log in http://localhost:3000/login
+If you put in the same password it should go here: http://localhost:3000/loggedin
+If not (wrong password or missing user) it goes back to login page: http://localhost:3000/login
+
+- Notes:
+We can access the logged in page (/loggedin) without actually going through the login 
+process if we know the direct URL. :O This is BAD, and we'll fix it later
+
 v1.5 - Hash passwords using BCrypt
 ==================================
 Storing passwords in plaintext is BAD. 

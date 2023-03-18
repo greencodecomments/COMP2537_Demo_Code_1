@@ -49,7 +49,21 @@ app.post('/submitEmail', (req,res) => {
 
 app.get('/createUser', (req,res) => {
     var html = `
+    create user
     <form action='/submitUser' method='post'>
+    <input name='username' type='text' placeholder='username'>
+    <input name='password' type='password' placeholder='password'>
+    <button>Submit</button>
+    </form>
+    `;
+    res.send(html);
+});
+
+
+app.get('/login', (req,res) => {
+    var html = `
+    log in
+    <form action='/loggingin' method='post'>
     <input name='username' type='text' placeholder='username'>
     <input name='password' type='password' placeholder='password'>
     <button>Submit</button>
@@ -74,6 +88,32 @@ app.post('/submitUser', (req,res) => {
     }
 
     var html = "<ul>" + usershtml + "</ul>";
+    res.send(html);
+});
+
+app.post('/loggingin', (req,res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+
+
+    var usershtml = "";
+    for (i = 0; i < users.length; i++) {
+        if (users[i].username == username) {
+            if (bcrypt.compareSync(password, users[i].password)) {
+                res.redirect('/loggedIn');
+                return;
+            }
+        }
+    }
+
+    //user and password combination not found
+    res.redirect("/login");
+});
+
+app.get('/loggedin', (req,res) => {
+    var html = `
+    You are logged in!
+    `;
     res.send(html);
 });
 
