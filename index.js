@@ -17,6 +17,7 @@ var users = [];
 /* secret information section */
 const mongodb_user = "YourMongoDBUser";
 const mongodb_password = "YourPasswordGoesHere";
+const mongodb_session_secret = "3ce72a05-c5b6-4bbe-9517-e2f5c8e8e8a2";
 
 const node_session_secret = "2ec62a80-7111-4ca6-9a89-af20d800e0ef";
 /* END secret section */
@@ -24,7 +25,10 @@ const node_session_secret = "2ec62a80-7111-4ca6-9a89-af20d800e0ef";
 app.use(express.urlencoded({extended: false}));
 
 var mongoStore = MongoStore.create({
-	mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@cluster0.fuu9a.mongodb.net/sessions`
+	mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@cluster0.fuu9a.mongodb.net/sessions`,
+	crypto: {
+		secret: mongodb_session_secret
+	}
 })
 
 app.use(session({ 

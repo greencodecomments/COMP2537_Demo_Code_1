@@ -1,3 +1,34 @@
+v1.8 - Sessions - With Encryption
+===============================
+Being able to read the session information on the server side is bad, 
+because if someone gets access to the session database on mongodb, 
+they can see session information. 
+
+But fortunately, it's simple to encrypt it!!
+
+- Follow along instructions:
+Generate a new GUID for your mongodb_session_secret
+(it should be different from your node_session_secret)
+at: https://guidgenerator.com/
+or: https://www.uuidgenerator.net/guid
+or: https://www.guidgen.com/
+
+- To Test:
+Create a user http://localhost:3000/createUser
+(remember to create some users - your server likely got rebooted and all users got deleted)
+
+Attempt to log in http://localhost:3000/login
+If you put in the same password it should go here: http://localhost:3000/loggedin
+
+Open your mongo session database and you NOT be able to see the session information (usernames)
+(the information IS still there, but now it's encrypted and impossible to read by hand 
+and without the encryption key)
+
+- Notes:
+You should not store your mongodb username and password or your encryption secrets
+in your source code and in your git repo.
+ (again, we'll fix this later)
+
 v1.7 - Sessions - No Encryption
 ===============================
 In the previous "Login" version, we were supposed to go to /login,
@@ -38,6 +69,7 @@ If you put in the same password it should go here: http://localhost:3000/loggedi
 If not (wrong password or missing user) it goes back to login page: http://localhost:3000/login
 
 Open your mongo session database and you can see your session with username stored in it (unencrypted)
+
 - Notes:
 Sessions are not encrypted on server side. This is BAD. :'(
 You should not store your mongodb username and password in your source code and in your git repo.
