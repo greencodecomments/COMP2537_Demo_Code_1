@@ -1,3 +1,23 @@
+v1.4 - Create a user using in-memory 'database'
+===============================================
+In this version we create an in-memory 'database'
+where we store the users in an array, but it's only in the server's RAM
+so if you restart node or reboot the computer, it gets erased (this is bad
+but we'll fix this later).
+
+/createUser  => form for entering username and password to create a new user
+
+- To Test:
+open browser at: http://localhost:3000/createUser
+fill in a username and password, hit submit
+You should be sent to /submitUser
+And the user added. (Page shows a list of all users)
+The list will grow for each time you post to add a new user
+
+- Notes: 
+If you reboot the server (restart nodemon) ALL USERS ARE DELETED! :O
+Passwords stored in plaintext!! :O (this is VERY BAD!)
+
 v1.3 - Form fields and POSTs
 ============================
 How do we handle the text input when the user presses the submit button?
