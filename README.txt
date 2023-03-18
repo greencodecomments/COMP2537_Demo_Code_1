@@ -1,3 +1,29 @@
+v1.5 - Hash passwords using BCrypt
+==================================
+Storing passwords in plaintext is BAD. 
+VERY BAD.
+Let's see how to use BCrypt to hash the passwords so no one can see them
+(or steal them).
+
+After hashing the passwords with BCrypt, they should look something like:
+$2b$12$s2hrmuKearD75p4dkpTFBebvgGSKxeUOH51CwlnDHCmFcjjMIsuW.
+
+- Follow along instructions:
+npm install bcrypt
+
+- To Test:
+open browser at: http://localhost:3000/createUser
+fill in a username and password, hit submit
+You should be sent to /submitUser
+And the user added. (Page shows a list of all users)
+See the passwords are now hashed (and not plaintext)
+
+- Notes: 
+Even 2 people have the same password, their hashed passwords are different.
+Try it out, create user1 with password "Password".
+Create user2 with password "Password" and confirm their hashes are different.
+
+
 v1.4 - Create a user using in-memory 'database'
 ===============================================
 In this version we create an in-memory 'database'

@@ -1,4 +1,6 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 const port = process.env.PORT || 3000;
 
@@ -60,7 +62,9 @@ app.post('/submitUser', (req,res) => {
     var username = req.body.username;
     var password = req.body.password;
 
-    users.push({ username: username, password: password });
+    var hashedPassword = bcrypt.hashSync(password, saltRounds);
+
+    users.push({ username: username, password: hashedPassword });
 
     console.log(users);
 
