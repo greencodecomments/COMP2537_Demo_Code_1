@@ -211,6 +211,15 @@ app.get('/loggedin', (req,res) => {
     res.send(html);
 });
 
+app.get('/logout', (req,res) => {
+	req.session.destroy();
+    var html = `
+    You are logged out.
+    `;
+    res.send(html);
+});
+
+
 app.get('/cat/:id', (req,res) => {
 
     var cat = req.params.id;
